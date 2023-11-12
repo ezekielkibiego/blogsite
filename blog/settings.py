@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'blogapp',
     'bootstrap4',
     'cloudinary',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

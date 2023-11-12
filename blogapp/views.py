@@ -1,7 +1,10 @@
 from django.shortcuts import redirect, render
-
+from rest_framework import status
 from blogapp.forms import BlogForm
+from blogapp.serializers import BlogSerializer
 from .models import *
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 def index(request):
  
@@ -36,3 +39,18 @@ def add_post(request):
 
 
     return render(request, "blogForm.html", {"form": form})
+
+
+class BlogListView(APIView):
+    def get(self, request):
+        blogs = Blog.objects.all()
+        serializer = BlogSerializer(blogs, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = BlogSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
