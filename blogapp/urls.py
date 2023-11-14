@@ -7,6 +7,7 @@ urlpatterns = [
     path("blogs/", blogs, name="blogs"),
     path("add_blog/", add_post, name="add_post"),
     path('bloglist/', BlogListView.as_view(), name='bloglist'),
+    path('editors/', editor_list, name='editors'),
 
 
 ]
